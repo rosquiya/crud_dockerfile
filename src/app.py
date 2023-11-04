@@ -1,6 +1,7 @@
 from flask import Flask, flash, render_template, redirect, url_for, request, session
 from dao.DAOUsuario import DAOUsuario
 from dao.DAOEmpleados import DAOEmpleados
+from dao.DAOObservaciones import DAOObservaciones
 
 
 
@@ -9,6 +10,7 @@ app.secret_key = "Ut3c_123456" #texto super largo
 
 db = DAOUsuario()
 db_empleados = DAOEmpleados()
+db_observaciones = DAOObservaciones()
 
 
 
@@ -106,7 +108,7 @@ def aboutPage():
 
 @app.route('/empleados/')  
 def index_empleados():
-    datos_empleados = db_empleados.read(None)  # Cambia db.read_empleados al método correcto
+    datos_empleados = db_empleados.read(None)  # 
     return render_template('empleados/index.html', data_empleados=datos_empleados)
 
 
@@ -176,6 +178,20 @@ def deleteempleados():
         return redirect(url_for('index_empleados'))
 
 
+#-------------------------------------------------------------------------
+
+@app.route('/observaciones/')  
+def index_observaciones():
+    datos_observaciones = db_observaciones.read(None)  # 
+    return render_template('observaciones/index.html', data_observaciones=datos_observaciones)
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
-    app.run(debug=True, port=3001)  #port 5000 por defecto 
+    app.run(port=5000, host="0.0.0.0",debug=True)  #port 5000 por defecto 
 
